@@ -70,7 +70,7 @@ async function routes(fastify, options) {
             },
             accessory: {
               type: "image",
-              image_url: `${response.data.image.thumb}`,
+              image_url: `${response.data.image.large}`,
               alt_text: `${response.data.name} icon`,
             },
           },
