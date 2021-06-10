@@ -66,12 +66,11 @@ async function routes(fastify, options) {
               type: "mrkdwn",
               text: `The price of *${response.data.name}* is ${formatter.format(
                 response.data.market_data.current_price.usd
-              )}\n
-              👉 <${response.data.links.homepage}|Website>\n
-              👉 <https://twitter.com/${
+              )}\n👉 <${
+                response.data.links.homepage[0]
+              }|Website>\n👉 <https://twitter.com/${
                 response.data.links.twitter_screen_name
-              }|Twitter>\n
-              👉 <${response.data.links.subreddit_url}|Reddit>`,
+              }|Twitter>\n👉 <${response.data.links.subreddit_url}|Reddit>`,
             },
             accessory: {
               type: "image",
