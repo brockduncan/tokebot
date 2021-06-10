@@ -53,8 +53,8 @@ async function routes(fastify, options) {
       };
       const slackResponse = await axios.post(req.body.response_url, {
         text: `The price of ${response.data.name} is $${response.data.market_data.current_price.usd} 💰`,
+        response_type: "ephemeral",
       });
-      reply.send(quoteObj);
     } catch (error) {
       console.log(error.response.body);
     }
