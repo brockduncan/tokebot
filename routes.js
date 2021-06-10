@@ -66,9 +66,7 @@ async function routes(fastify, options) {
               type: "mrkdwn",
               text: `The price of *${response.data.name}* is ${formatter.format(
                 response.data.market_data.current_price.usd
-              )}.\n\n${response.data.description.en}
-
-              `,
+              )}`,
             },
             accessory: {
               type: "image",
