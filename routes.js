@@ -7,12 +7,12 @@ const token = process.env.SLACK_TOKEN;
 const web = new WebClient(token);
 
 async function routes(fastify, options) {
-  fastify.get("/", async (request, reply) => {
+  fastify.get("/", async (req, reply) => {
     return { hello: "toker" };
   });
 
   // update token list
-  fastify.get("/tokens/update", async (request, reply) => {
+  fastify.get("/tokens/update", async (req, reply) => {
     try {
       const response = await axios.get(
         "https://api.coingecko.com/api/v3/coins/list?include_platform=false"
@@ -35,7 +35,7 @@ async function routes(fastify, options) {
   });
 
   // get token price
-  fastify.get("/quote/:symbol", async (request, reply) => {
+  fastify.post("/quote", async (req, reply) => {
     try {
       const tokens = await JSON.parse(
         fs.readFileSync(path.join(__dirname, "/data/tokens.json"))
@@ -43,7 +43,7 @@ async function routes(fastify, options) {
       // lookup token id by symbol
       let tokenID;
       for (let i = 0; i < tokens.length; i++) {
-        if (tokens[i].symbol == request.params.symbol) {
+        if (tokens[i].symbol == req.body.text) {
           tokenID = await tokens[i].id;
         }
       }
@@ -55,6 +55,9 @@ async function routes(fastify, options) {
         name: response.data.name,
         price: response.data.market_data.current_price.usd,
       };
+      const slackResponse = await axios.post(req.body.response_url, {
+        text: `The price of ${response.data.name} is $${response.data.market_data.current_price.usd} 💰`,
+      });
       reply.send(quoteObj);
     } catch (error) {
       console.log(error.response.body);

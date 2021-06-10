@@ -1,6 +1,8 @@
 // Require the framework and instantiate it
 const fastify = require("fastify")({ logger: true });
 
+fastify.register(require("fastify-formbody"));
+
 fastify.register(require("./routes"));
 
 // Run the server!
