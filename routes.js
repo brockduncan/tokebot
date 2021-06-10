@@ -55,7 +55,36 @@ async function routes(fastify, options) {
         replace_original: "true",
         channel: req.body.channel_id,
         response_type: "in_channel",
-        text: `The price of ${response.data.name} is $${response.data.market_data.current_price.usd} 💰`,
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `The price of **${response.data.name}** is $${response.data.market_data.current_price.usd} ![${response.data.name} icon](${response.data.image.thumb})`,
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `**Volume(24h):** ${response.data.market_data.total_volume}%`,
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `**Market Cap:** ${response.data.market_data.market_cap}%`,
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `**% change(24h):** ${response.data.market_data.price_change_percentage_24h}%`,
+            },
+          },
+        ],
       });
       reply.send();
     } catch (error) {
