@@ -60,29 +60,39 @@ async function routes(fastify, options) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `The price of **${response.data.name}** is $${response.data.market_data.current_price.usd} ![${response.data.name} icon](${response.data.image.thumb})`,
+              text: `The price of *${response.data.name}* is $${response.data.market_data.current_price.usd}`,
+            },
+            accessory: {
+              type: "image",
+              image_url: `${response.data.image.small}`,
+              alt_text: `${response.data.name} icon`,
             },
           },
           {
             type: "section",
-            text: {
-              type: "mrkdwn",
-              text: `**Volume(24h):** ${response.data.market_data.total_volume}`,
-            },
+            fields: [
+              {
+                type: "mrkdwn",
+                text: `*Volume(24h):*\n${response.data.market_data.total_volume}`,
+              },
+              {
+                type: "mrkdwn",
+                text: `*% change(24h):*\n${response.data.market_data.price_change_percentage_24h}%`,
+              },
+            ],
           },
           {
             type: "section",
-            text: {
-              type: "mrkdwn",
-              text: `**Market Cap:** ${response.data.market_data.market_cap}`,
-            },
-          },
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text: `**% change(24h):** ${response.data.market_data.price_change_percentage_24h}%`,
-            },
+            fields: [
+              {
+                type: "mrkdwn",
+                text: `*Market Cap:*\n${response.data.market_data.market_cap}`,
+              },
+              {
+                type: "mrkdwn",
+                text: `*Market Cap Rank:*\n#${response.data.market_data.market_cap}`,
+              },
+            ],
           },
         ],
       });
