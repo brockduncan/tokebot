@@ -1,10 +1,6 @@
 const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
-const { WebClient } = require("@slack/web-api");
-
-const token = process.env.SLACK_TOKEN;
-const web = new WebClient(token);
 
 async function routes(fastify, options) {
   fastify.get("/", async (req, reply) => {
