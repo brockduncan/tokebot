@@ -73,7 +73,7 @@ async function routes(fastify, options) {
             fields: [
               {
                 type: "mrkdwn",
-                text: `*Volume(24h):*\n${response.data.market_data.total_volume}`,
+                text: `*Volume(24h):*\n${response.data.market_data.total_volume.usd}`,
               },
               {
                 type: "mrkdwn",
@@ -86,11 +86,11 @@ async function routes(fastify, options) {
             fields: [
               {
                 type: "mrkdwn",
-                text: `*Market Cap:*\n${response.data.market_data.market_cap}`,
+                text: `*Market Cap:*\n${response.data.market_data.market_cap.usd}`,
               },
               {
                 type: "mrkdwn",
-                text: `*Market Cap Rank:*\n#${response.data.market_data.market_cap}`,
+                text: `*Market Cap Rank:*\n#${response.data.market_data.market_cap_rank}`,
               },
             ],
           },
