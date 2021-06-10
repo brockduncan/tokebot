@@ -67,14 +67,14 @@ async function routes(fastify, options) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `**Volume(24h):** ${response.data.market_data.total_volume}%`,
+              text: `**Volume(24h):** ${response.data.market_data.total_volume}`,
             },
           },
           {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `**Market Cap:** ${response.data.market_data.market_cap}%`,
+              text: `**Market Cap:** ${response.data.market_data.market_cap}`,
             },
           },
           {
