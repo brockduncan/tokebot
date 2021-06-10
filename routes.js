@@ -53,6 +53,7 @@ async function routes(fastify, options) {
       };
       const slackResponse = await axios.post(req.body.response_url, {
         replace_original: "true",
+        channel: req.body.channel_id,
         text: `The price of ${response.data.name} is $${response.data.market_data.current_price.usd} 💰`,
       });
       reply.send();
