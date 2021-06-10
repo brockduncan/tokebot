@@ -51,6 +51,10 @@ async function routes(fastify, options) {
         name: response.data.name,
         price: response.data.market_data.current_price.usd,
       };
+      let formatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
       const slackResponse = await axios.post(req.body.response_url, {
         replace_original: "true",
         channel: req.body.channel_id,
@@ -60,11 +64,15 @@ async function routes(fastify, options) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `The price of *${response.data.name}* is $${response.data.market_data.current_price.usd}`,
+              text: `The price of *${response.data.name}* is ${formatter.format(
+                response.data.market_data.current_price.usd
+              )}.\n\n${response.data.description.en}
+
+              `,
             },
             accessory: {
               type: "image",
-              image_url: `${response.data.image.small}`,
+              image_url: `${response.data.image.thumb}`,
               alt_text: `${response.data.name} icon`,
             },
           },
@@ -73,7 +81,9 @@ async function routes(fastify, options) {
             fields: [
               {
                 type: "mrkdwn",
-                text: `*Volume(24h):*\n${response.data.market_data.total_volume.usd}`,
+                text: `*Volume(24h):*\n${formatter.format(
+                  response.data.market_data.total_volume.usd
+                )}`,
               },
               {
                 type: "mrkdwn",
@@ -86,7 +96,9 @@ async function routes(fastify, options) {
             fields: [
               {
                 type: "mrkdwn",
-                text: `*Market Cap:*\n${response.data.market_data.market_cap.usd}`,
+                text: `*Market Cap:*\n${formatter.format(
+                  response.data.market_data.market_cap.usd
+                )}`,
               },
               {
                 type: "mrkdwn",
