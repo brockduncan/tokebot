@@ -54,6 +54,7 @@ async function routes(fastify, options) {
       let formatter = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
+        minimumFractionDigits: 6,
       });
       const slackResponse = await axios.post(req.body.response_url, {
         replace_original: "true",
