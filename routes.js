@@ -51,10 +51,14 @@ async function routes(fastify, options) {
         name: response.data.name,
         price: response.data.market_data.current_price.usd,
       };
+      let price = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 3,
+      });
       let formatter = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-        minimumFractionDigits: 6,
       });
       const slackResponse = await axios.post(req.body.response_url, {
         replace_original: "true",
@@ -65,7 +69,7 @@ async function routes(fastify, options) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `The price of *${response.data.name}* is ${formatter.format(
+              text: `The price of *${response.data.name}* is ${price.format(
                 response.data.market_data.current_price.usd
               )}\n👉 <${
                 response.data.links.homepage[0]
