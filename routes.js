@@ -46,7 +46,7 @@ async function routes(fastify, options) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `ETH :fuelpump: :gq:\n\n:turtle: Slow *${response.data.result.SafeGasPrice}* gwei\n:pig2: Average *${response.data.result.ProposeGasPrice}* gwei\n:rabbit2: Fast *${response.data.result.FastGasPrice}* gwei`,
+              text: `ETH :fuelpump: :gq:\n:turtle: Slow *${response.data.result.SafeGasPrice}* gwei\n:pig2: Average *${response.data.result.ProposeGasPrice}* gwei\n:rabbit2: Fast *${response.data.result.FastGasPrice}* gwei`,
             },
           },
         ],
@@ -98,7 +98,7 @@ async function routes(fastify, options) {
               type: "mrkdwn",
               text: `The price of *${response.data.name}* is ${price.format(
                 response.data.market_data.current_price.usd
-              )}\n\n👉 <${
+              )}\n👉 <${
                 response.data.links.homepage[0]
               }|Website>\n👉 <https://twitter.com/${
                 response.data.links.twitter_screen_name
