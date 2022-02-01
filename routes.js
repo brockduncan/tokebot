@@ -30,6 +30,36 @@ async function routes(fastify, options) {
     }
   });
 
+  // get eth gas price
+  fastify.get("/gas", async (req, reply) => {
+    try {
+      const response = await axios.get(
+        `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${process.env.ETHERSCAN_API_KEY}`
+      );
+      console.log(response.data.result);
+      const slackResponse = await axios.post(req.body.response_url, {
+        replace_original: "false",
+        channel: req.body.channel_id,
+        response_type: "in_channel",
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `ETH ⛽️\n
+              SAFE: *${response.data.result.SafeGasPrice}* gwei\n
+              PROPOSED: *${response.data.result.SafeGasPrice}* gwei\n
+              FAST: *${response.data.result.SafeGasPrice}* gwei\n`,
+            },
+          },
+        ],
+      });
+      reply.send();
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
   // get token price
   fastify.post("/quote", async (req, reply) => {
     try {
