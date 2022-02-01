@@ -31,7 +31,7 @@ async function routes(fastify, options) {
   });
 
   // get eth gas price
-  fastify.get("/gas", async (req, reply) => {
+  fastify.post("/gas", async (req, reply) => {
     try {
       const response = await axios.get(
         `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${process.env.ETHERSCAN_API_KEY}`
