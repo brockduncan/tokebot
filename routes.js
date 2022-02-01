@@ -46,7 +46,10 @@ async function routes(fastify, options) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `ETH :fuelpump: :gq:\n\n:turtle: Slow *${response.data.result.SafeGasPrice}* gwei\n:pig2: Average *${response.data.result.SafeGasPrice}* gwei\n:rabbit2: Fast *${response.data.result.SafeGasPrice}* gwei`,
+              text: `ETH :fuelpump: :gq:\n\n
+              :turtle: Slow *${response.data.result.SafeGasPrice}* gwei\n
+              :pig2: Average *${response.data.result.ProposedGasPrice}* gwei\n
+              :rabbit2: Fast *${response.data.result.FastGasPrice}* gwei`,
             },
           },
         ],
