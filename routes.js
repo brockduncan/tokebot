@@ -49,7 +49,7 @@ async function routes(fastify, options) {
               text: `ETH ⛽️\n
               SAFE: *${response.data.result.SafeGasPrice}* gwei\n
               PROPOSED: *${response.data.result.SafeGasPrice}* gwei\n
-              FAST: *${response.data.result.SafeGasPrice}* gwei\n`,
+              FAST: *${response.data.result.SafeGasPrice}* gwei`,
             },
           },
         ],
