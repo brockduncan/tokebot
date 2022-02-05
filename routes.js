@@ -59,6 +59,7 @@ async function routes(fastify, options) {
 
   // get token price
   fastify.post("/quote", async (req, reply) => {
+    console.log(req.body.text);
     try {
       const tokens = await JSON.parse(
         fs.readFileSync(path.join(__dirname, "/data/tokens.json"))
@@ -66,7 +67,10 @@ async function routes(fastify, options) {
       // lookup token id by symbol
       let tokenID;
       for (let i = 0; i < tokens.length; i++) {
-        if (tokens[i].symbol == req.body.text) {
+        if (
+          tokens[i].symbol == req.body.text &&
+          !tokens[i].id.contains("-wormhole")
+        ) {
           tokenID = await tokens[i].id;
         }
       }
@@ -142,6 +146,7 @@ async function routes(fastify, options) {
           },
         ],
       });
+      console.log(req.body.text);
       reply.send();
     } catch (error) {
       console.log(error.response.body);
