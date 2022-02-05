@@ -69,7 +69,7 @@ async function routes(fastify, options) {
       for (let i = 0; i < tokens.length; i++) {
         if (
           tokens[i].symbol == req.body.text &&
-          !tokens[i].id.contains("-wormhole")
+          !tokens[i].id.includes("-wormhole")
         ) {
           tokenID = await tokens[i].id;
         }
