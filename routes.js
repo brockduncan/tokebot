@@ -158,7 +158,7 @@ async function routes(fastify, options) {
   fastify.post("/random-gif", async (req, reply) => {
     try {
       const response = await axios.get(
-        `https://g.tenor.com/v1/random?key=${process.env.TENOR_API_KEY}&q=${req.body.search}`
+        `https://g.tenor.com/v1/random?key=${process.env.TENOR_API_KEY}&q=${req.body.search}&media_filter=minimal`
       );
       console.log(response.data.results[0].url);
       const slackResponse = await axios.post(req.body.response_url, {
@@ -170,7 +170,7 @@ async function routes(fastify, options) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `${response.data.results[0].url}`,
+              text: `*${req.body.search}* ${response.data.results[0].url}`,
             },
           },
         ],
