@@ -152,6 +152,34 @@ async function routes(fastify, options) {
       console.log(error.response.body);
     }
   });
+
+  // random gif
+  // get eth gas price
+  fastify.post("/random-gif", async (req, reply) => {
+    try {
+      const response = await axios.get(
+        `https://g.tenor.com/v1/random?key=${process.env.TENOR_API_KEY}&q=${req.body.search}`
+      );
+      console.log(response.data.results[0].url);
+      const slackResponse = await axios.post(req.body.response_url, {
+        replace_original: "false",
+        channel: req.body.channel_id,
+        response_type: "in_channel",
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `${response.data.results[0].url}`,
+            },
+          },
+        ],
+      });
+      reply.send();
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
 }
 
 module.exports = routes;
