@@ -170,7 +170,7 @@ async function routes(fastify, options) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `*${req.body.text}* ${response.data.results[0].media[0].tinygif.url}`,
+              text: `${req.body.user_name} :speaking_head_in_silhouette: *${req.body.text}* ${response.data.results[0].media[0].tinygif.url}`,
             },
           },
         ],
