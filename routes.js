@@ -160,7 +160,7 @@ async function routes(fastify, options) {
       const response = await axios.get(
         `https://g.tenor.com/v1/random?key=${process.env.TENOR_API_KEY}&q=${req.body.text}&media_filter=minimal`
       );
-      console.log(response.data.results[0].media.tinygif.url);
+      console.log(response.data.results[0].media[0].tinygif.url);
       const slackResponse = await axios.post(req.body.response_url, {
         replace_original: "false",
         channel: req.body.channel_id,
@@ -170,7 +170,7 @@ async function routes(fastify, options) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `*${req.body.text}* ${response.data.results[0].media.tinygif.url}`,
+              text: `*${req.body.text}* ${response.data.results[0].media[0].tinygif.url}`,
             },
           },
         ],
