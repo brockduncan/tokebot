@@ -170,7 +170,7 @@ async function routes(fastify, options) {
             type: "image",
             title: {
               type: "plain_text",
-              text: `${req.body.user_name} :speaking_head_in_silhouette: *${req.body.text}*`,
+              text: `${req.body.user_name} :film_projector: ${req.body.command} ${req.body.text}`,
             },
             block_id: "image4",
             image_url: `${response.data.results[0].media[0].tinygif.url}`,
