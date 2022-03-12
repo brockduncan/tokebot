@@ -85,7 +85,7 @@ async function routes(fastify, options) {
       let price = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-        minimumFractionDigits: 3,
+        minimumFractionDigits: 8,
       });
       let formatter = new Intl.NumberFormat("en-US", {
         style: "currency",
