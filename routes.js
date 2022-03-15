@@ -61,9 +61,28 @@ async function routes(fastify, options) {
   fastify.post("/quote", async (req, reply) => {
     console.log(req.body.text);
     try {
-      const tokens = await JSON.parse(
-        fs.readFileSync(path.join(__dirname, "/data/tokens.json"))
-      );
+      const dir = "./data";
+      let tokens;
+      // get token list if none exists
+      if (!fs.existsSync(dir)) {
+        const response = await axios.get(
+          "https://api.coingecko.com/api/v3/coins/list?include_platform=false"
+        );
+        fs.mkdirSync(dir);
+        fs.writeFile(
+          path.join(__dirname, "data", "tokens.json"),
+          JSON.stringify(response.data),
+          (error) => {
+            if (error) return console.log(error);
+          }
+        );
+        tokens = response.data;
+      } else {
+        tokens = await JSON.parse(
+          fs.readFileSync(path.join(__dirname, "./data/tokens.json"))
+        );
+      }
+
       // lookup token id by symbol
       let tokenID;
       for (let i = 0; i < tokens.length; i++) {
@@ -82,6 +101,7 @@ async function routes(fastify, options) {
         name: response.data.name,
         price: response.data.market_data.current_price.usd,
       };
+      console.log(quoteObj);
       let price = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
@@ -149,7 +169,7 @@ async function routes(fastify, options) {
       console.log(req.body.text);
       reply.send();
     } catch (error) {
-      console.log(error.response.body);
+      console.log(error.message);
     }
   });
 
