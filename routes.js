@@ -67,6 +67,7 @@ async function routes(fastify, options) {
           "https://api.coingecko.com/api/v3/coins/list?include_platform=false"
         );
         tokens = response.data;
+        console.log(tokens);
       } catch (error) {
         console.error(error.message);
       }
@@ -76,7 +77,8 @@ async function routes(fastify, options) {
       for (let i = 0; i < tokens.length; i++) {
         if (
           tokens[i].symbol == req.body.text &&
-          !tokens[i].id.includes("-wormhole")
+          !tokens[i].id.includes("-wormhole") &&
+          !tokens[i].id.includes("-ethw")
         ) {
           tokenID = await tokens[i].id;
         }
@@ -85,6 +87,7 @@ async function routes(fastify, options) {
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${tokenID}`
       );
+      console.log(response);
       const quoteObj = {
         name: response.data.name,
         price: response.data.market_data.current_price.usd,
